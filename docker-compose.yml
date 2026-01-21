@@ -1,4 +1,4 @@
-# version: "3.9"
+version: "3.9"
 
 services:
   backend:
@@ -6,33 +6,44 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: lms-backend
-    ports:
-      - "8000:8002"
     environment:
       - MONGO_URI=${MONGO_URI}
       - DB_NAME=${DB_NAME}
     depends_on:
       - mongo
+    networks:
+      - web
+    restart: unless-stopped
+    expose:
+      - "8002"
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: lms-frontend
-    ports:
-      - "5173:80"
+    networks:
+      - web
+    restart: unless-stopped
+    expose:
+      - "80"
 
   mongo:
     image: mongo:6.0
     container_name: lms-mongo
     restart: unless-stopped
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
-    ports:
-      - "27017:27017"
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
     volumes:
       - mongo-data:/data/db
+    networks:
+      - web
+    # NO ports
 
 volumes:
   mongo-data:
+
+networks:
+  web:
+    external: true
