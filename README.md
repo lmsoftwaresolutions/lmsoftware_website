@@ -30,8 +30,8 @@ docker compose version
 
 # 1. Clone the Repository:
 ```bash
-git clone https://github.com/rohitshinde08/LMS_Website.git
-cd LMS_Website
+git clone https://github.com/lmsoftwaresolutions/lmsoftware_website.git
+cd lmsoftware_website
 ```
 
 
