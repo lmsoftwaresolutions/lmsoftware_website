@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost1:8000",
+        target: "http://lms-backend:8002",
         changeOrigin: true,
       },
     },
