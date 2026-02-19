@@ -12,7 +12,7 @@ services:
     depends_on:
       - mongo
     networks:
-      - web
+      - lms-network
     restart: unless-stopped
     expose:
       - "8002"
@@ -23,7 +23,7 @@ services:
       dockerfile: Dockerfile
     container_name: lms-frontend
     networks:
-      - web
+      - lms-network
     restart: unless-stopped
     expose:
       - "80"
@@ -38,12 +38,13 @@ services:
     volumes:
       - mongo-data:/data/db
     networks:
-      - web
+      - lms-network
     # NO ports
 
 volumes:
   mongo-data:
 
 networks:
-  web:
-    external: true
+  lms-network:
+    driver: bridge
+
