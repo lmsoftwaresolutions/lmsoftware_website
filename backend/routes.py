@@ -30,9 +30,11 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 # ---------------- CONTACT ----------------
 @router.post("/contact")
 def submit_message(data: ContactMessage):
+    print
     doc = data.dict()
     doc["created_at"] = datetime.utcnow()
     contact_collection.insert_one(doc)
+    
     return {"message": "Saved successfully"}
 
 @router.get("/contacts")
